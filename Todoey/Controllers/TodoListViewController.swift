@@ -46,7 +46,6 @@ class TodoListViewController: UITableViewController {
         cell.accessoryType = item.done ? .checkmark : .none
         
         return cell
-        
     }
     
     //MARK - TableView Delegate Methods
@@ -91,7 +90,6 @@ class TodoListViewController: UITableViewController {
         alert.addAction(action)
         
         present(alert, animated: true, completion: nil)
-        
     }
     
     func saveItems(){
