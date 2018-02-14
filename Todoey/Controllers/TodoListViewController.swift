@@ -7,16 +7,17 @@
 //
 
 import UIKit
+import CoreData
 
 class TodoListViewController: UITableViewController {
     
     var itemArray = [Item]()
-    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(dataFilePath)
+        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist"))
                 
         loadItems()
     }
@@ -53,9 +54,16 @@ class TodoListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //print(itemArray[indexPath.row])
         
+        // update test using the setValue() method.
+        //itemArray[indexPath.row].setValue("Completed", forKey: "title")
+        
+        // delete test
+        //context.delete(itemArray[indexPath.row])
+        //itemArray.remove(at: indexPath.row)
+        
         // set our model's (item) done property to the opposite of it's current state
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
-        
+    
         saveItems()
         
         // Go back to a while color after tapping and "grayifiying" the cell's color.   
@@ -75,8 +83,9 @@ class TodoListViewController: UITableViewController {
             // what will happen once the user clicks the Add Item button on our UIAlert
             //print(textField.text)
             
-            let newItem = Item()
+            let newItem = Item(context: self.context)
             newItem.title = textField.text!
+            newItem.done = false
             self.itemArray.append(newItem)
             
             self.saveItems()
@@ -93,13 +102,10 @@ class TodoListViewController: UITableViewController {
     }
     
     func saveItems(){
-        let encoder = PropertyListEncoder()
-        
         do {
-            let data = try encoder.encode(itemArray)
-            try data.write(to: dataFilePath!)
+            try context.save()
         } catch {
-            print("Error encoding item array. \(error)")
+            print("Error saving context \(error)")
         }
         
         // trigger our cellForRowAt delegate method. (i.e. force the calling of our datasouce methods.)
@@ -107,14 +113,12 @@ class TodoListViewController: UITableViewController {
     }
     
     func loadItems() {
-        if let data =  try? Data(contentsOf: dataFilePath!) {
-            let decoder = PropertyListDecoder()
-            do {
-                itemArray = try decoder.decode([Item].self, from: data)
-            }
-            catch {
-                print("Error decoding item array, \(error)")
-            }
+        // pull out everything inside the Item Entity inside the persistent container.
+        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        do {
+            itemArray = try context.fetch(request)
+        } catch {
+            print("Error fetching data from context: \(error)")
         }
     }
     
