@@ -8,8 +8,9 @@
 
 import UIKit
 import RealmSwift
+import SwipeCellKit
 
-class CategoryViewController: UITableViewController {
+class CategoryViewController: SwipeTableViewController {
 
     //MARK: - Top Variables
     
@@ -33,10 +34,10 @@ class CategoryViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // create our reusable cell
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
+
+        // tap into the cell from our super view (trigger the cellForRowAt indexPath delegate method in our super view.)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
-        // set the cell name
         cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added Yet"
         
         return cell
@@ -82,6 +83,27 @@ class CategoryViewController: UITableViewController {
     }
     
     
+    //MARK: - Delete Data From Swipe
+    
+    override func updateModel(at indexPath: IndexPath) {
+        
+        //super.updateModel(at: indexPath)
+        
+        if let categoryForDeletion = self.categories?[indexPath.row] {
+            do {
+                try self.realm.write {
+                    self.realm.delete(categoryForDeletion) // deleting
+                }
+            } catch {
+                print("Error deleting Category, \(error)")
+            }
+        }
+        
+        // reloadData will happen automatically (thanks to editActionsOptionsForRowAt), so we don't need it anymore.
+        //tableView.reloadData()
+    }
+    
+    
     //MARK: - Add New Categories
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
@@ -110,3 +132,5 @@ class CategoryViewController: UITableViewController {
         present(alert, animated: true, completion: nil)
     }
 }
+
+

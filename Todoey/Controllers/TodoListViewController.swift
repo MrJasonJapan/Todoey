@@ -8,8 +8,9 @@
 
 import UIKit
 import RealmSwift
+import SwipeCellKit
 
-class TodoListViewController: UITableViewController {
+class TodoListViewController: SwipeTableViewController {
     
     //MARK: - Top Variables
     
@@ -47,8 +48,8 @@ class TodoListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        // create our reusable cell
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
+        // tap into the cell from our super view (trigger the cellForRowAt indexPath delegate method in our super view.)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         if let item = todoItems?[indexPath.row] {
             // set the cell title
@@ -56,7 +57,7 @@ class TodoListViewController: UITableViewController {
             // use the Swift Turnary operator to set the cell's checkmark accessory status (on or off)
             cell.accessoryType = item.done ? .checkmark : .none
         } else {
-            cell.textLabel?.text = "No Items Added"
+            cell.textLabel?.text = "No Items Added Yet"
         }
         
         return cell
@@ -82,6 +83,27 @@ class TodoListViewController: UITableViewController {
         tableView.reloadData()
         
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    
+    //MARK: - Delete Data From Swipe
+    
+    override func updateModel(at indexPath: IndexPath) {
+        
+        //super.updateModel(at: indexPath)
+        
+        if let itemForDeletion = self.todoItems?[indexPath.row] {
+            do {
+                try self.realm.write {
+                    self.realm.delete(itemForDeletion) // deleting
+                }
+            } catch {
+                print("Error deleting Item, \(error)")
+            }
+        }
+        
+        // reloadData will happen automatically (thanks to editActionsOptionsForRowAt), so we don't need it anymore.
+        //tableView.reloadData()
     }
     
     
