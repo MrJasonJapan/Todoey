@@ -17,7 +17,6 @@ class CategoryViewController: UITableViewController {
     var categories: Results<Category>?
     
     
-    
     //MARK: - ViewController Methods
     
     override func viewDidLoad() {
@@ -34,7 +33,6 @@ class CategoryViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         // create our reusable cell
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
         
@@ -52,7 +50,7 @@ class CategoryViewController: UITableViewController {
         
         let destinationVC = segue.destination as! TodoListViewController
         
-        // identify the currently selected row.
+        // identify the currently selected row and prepare our segue
         if let indexpath = tableView.indexPathForSelectedRow {
             destinationVC.selectedCategory = categories?[indexpath.row]
         }
@@ -90,7 +88,7 @@ class CategoryViewController: UITableViewController {
         
         var textField = UITextField()
         
-        // show UIAlert for creating a new Todo Item
+        // show UIAlert for creating a new Category
         let alert = UIAlertController(title: "Add New Todoey Category", message: "", preferredStyle: .alert)
         
         // what will happen once the user clicks the Add Category button on our UIAlert

@@ -14,7 +14,7 @@ class Item: Object {
     @objc dynamic var done: Bool = false
     @objc dynamic var dateCreated: Date?
     
-    // Set our "reverse" relationship of parentCategory that states:
+    // Set our "inverse" relationship of parentCategory that states:
     // create a link called "parentCategory" that links "items" to a Category.
     // I.E. each item has a parent category that is of the type Category coming from the property called "items"
     // Note: Category.self means: "The Category TYPE"

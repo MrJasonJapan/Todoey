@@ -13,6 +13,6 @@ class Category: Object {
     
     @objc dynamic var name: String = ""
     
-    // set our "forward" relationship to many items
+    // Set our "forward" relationship to many items
     let items = List<Item>()
 }

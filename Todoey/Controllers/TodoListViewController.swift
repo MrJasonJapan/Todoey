@@ -14,9 +14,7 @@ class TodoListViewController: UITableViewController {
     //MARK: - Top Variables
     
     var todoItems: Results<Item>?
-    
     let realm = try! Realm()
-    
     var selectedCategory: Category? {
         // Category must not be nil
         didSet {
@@ -158,7 +156,6 @@ extension TodoListViewController: UISearchBarDelegate {
                 // go to the state previous before the searchBar was activated (tapped)
                 searchBar.resignFirstResponder()
             }
-
         }
     }
 
