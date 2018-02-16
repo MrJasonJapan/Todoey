@@ -13,9 +13,18 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
+                
+        //Register your MessageCell.xib file here:
+        tableView.register(UINib(nibName: "Cell", bundle: nil), forCellReuseIdentifier: "customCell")
         
-        //make our cells taller
-        tableView.rowHeight = 80
+        // Declare configureTableView
+        configureTableView()
+    }
+    
+    // Declare configureTableView here: -> declare the "default" properties for our table.
+    func configureTableView() {
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 120.0
     }
     
     
@@ -24,7 +33,7 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // create our reusable cell
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! SwipeTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "customCell", for: indexPath) as! CustomCell
         
         cell.delegate = self
         

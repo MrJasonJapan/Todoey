@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "TodoListViewController.tableView(_:cellForRowAt:):TodoListViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "theDate">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "CategoryViewController.tableView(_:cellForRowAt:):CategoryViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "cell.textLabel?.text ">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

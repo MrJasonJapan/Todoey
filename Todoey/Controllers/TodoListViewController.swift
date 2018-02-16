@@ -49,15 +49,20 @@ class TodoListViewController: SwipeTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // tap into the cell from our super view (trigger the cellForRowAt indexPath delegate method in our super view.)
-        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath) as! CustomCell
         
         if let item = todoItems?[indexPath.row] {
             // set the cell title
-            cell.textLabel?.text = item.title
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            if let theDate = todoItems?[indexPath.row].dateCreated {
+                cell.dateCreated.text = formatter.string(from: theDate)
+            }
+            cell.body?.text = item.title
             // use the Swift Turnary operator to set the cell's checkmark accessory status (on or off)
             cell.accessoryType = item.done ? .checkmark : .none
         } else {
-            cell.textLabel?.text = "No Items Added Yet"
+            cell.body?.text = "No Items Added Yet"
         }
         
         return cell
@@ -150,7 +155,7 @@ class TodoListViewController: SwipeTableViewController {
     // load the specified Entity from the persistent container.
     func loadItems() {
 
-        todoItems = selectedCategory?.items.sorted(byKeyPath: "dateCreated", ascending: true)
+        todoItems = selectedCategory?.items.sorted(byKeyPath: "dateCreated", ascending: false)
         
         tableView.reloadData()
     }
@@ -161,7 +166,7 @@ extension TodoListViewController: UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-        todoItems = todoItems?.filter("title CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "dateCreated", ascending: true)
+        todoItems = todoItems?.filter("title CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "dateCreated", ascending: false)
         
         tableView.reloadData()
     }

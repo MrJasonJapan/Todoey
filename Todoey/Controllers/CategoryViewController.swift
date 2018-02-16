@@ -36,9 +36,9 @@ class CategoryViewController: SwipeTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         // tap into the cell from our super view (trigger the cellForRowAt indexPath delegate method in our super view.)
-        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath) as! CustomCell
         
-        cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added Yet"
+        cell.body?.text = categories?[indexPath.row].name ?? "No Categories Added Yet"
         
         return cell
     }

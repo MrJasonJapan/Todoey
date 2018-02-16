@@ -17,6 +17,8 @@
 		965EA67220357EBD009C6DE0 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965EA67120357EBD009C6DE0 /* Item.swift */; };
 		965EA67420357EDE009C6DE0 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965EA67320357EDE009C6DE0 /* Category.swift */; };
 		965EA6762035C251009C6DE0 /* SwipeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965EA6752035C251009C6DE0 /* SwipeTableViewController.swift */; };
+		965EA6792035D014009C6DE0 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965EA6782035D014009C6DE0 /* CustomCell.swift */; };
+		965EA67B2035D023009C6DE0 /* Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 965EA67A2035D023009C6DE0 /* Cell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		965EA67120357EBD009C6DE0 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		965EA67320357EDE009C6DE0 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		965EA6752035C251009C6DE0 /* SwipeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeTableViewController.swift; sourceTree = "<group>"; };
+		965EA6782035D014009C6DE0 /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		965EA67A2035D023009C6DE0 /* Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Cell.xib; sourceTree = "<group>"; };
 		A853F99BCC9B7B34D72B128D /* Pods_Todoey.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Todoey.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F07AA7BEE461A1B978F08112 /* Pods-Todoey.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Todoey.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Todoey/Pods-Todoey.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -110,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				960F17B420319252001FE664 /* Main.storyboard */,
+				965EA6772035CF87009C6DE0 /* Custom Cell */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -121,6 +126,15 @@
 				960F17B920319252001FE664 /* LaunchScreen.storyboard */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		965EA6772035CF87009C6DE0 /* Custom Cell */ = {
+			isa = PBXGroup;
+			children = (
+				965EA6782035D014009C6DE0 /* CustomCell.swift */,
+				965EA67A2035D023009C6DE0 /* Cell.xib */,
+			);
+			path = "Custom Cell";
 			sourceTree = "<group>";
 		};
 		E9C81971972DA7E92769596D /* Pods */ = {
@@ -195,6 +209,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				960F17BB20319252001FE664 /* LaunchScreen.storyboard in Resources */,
+				965EA67B2035D023009C6DE0 /* Cell.xib in Resources */,
 				960F17B820319252001FE664 /* Assets.xcassets in Resources */,
 				960F17B620319252001FE664 /* Main.storyboard in Resources */,
 			);
@@ -265,6 +280,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				965EA6792035D014009C6DE0 /* CustomCell.swift in Sources */,
 				965EA67220357EBD009C6DE0 /* Item.swift in Sources */,
 				965EA66E20355DDA009C6DE0 /* CategoryViewController.swift in Sources */,
 				960F17B320319252001FE664 /* TodoListViewController.swift in Sources */,
