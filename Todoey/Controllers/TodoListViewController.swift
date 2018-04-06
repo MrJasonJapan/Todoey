@@ -9,11 +9,14 @@
 import UIKit
 import RealmSwift
 import SwipeCellKit
+import ChameleonFramework
 
 class TodoListViewController: SwipeTableViewController {
     
-    //MARK: - Top Variables
+    //MARK: - Interface Builder Outlets
+    @IBOutlet weak var searchBar: UISearchBar!
     
+    //MARK: - Top Variables
     var todoItems: Results<Item>?
     let realm = try! Realm()
     var selectedCategory: Category? {
@@ -29,12 +32,54 @@ class TodoListViewController: SwipeTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist"))
+//        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist"))
+        
+        tableView.separatorStyle = .none
+    
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        title = selectedCategory?.name
+        
+        // adjust the nav bar color to match the category color theme.
+        guard let colorHex = selectedCategory?.color else { fatalError() }
+        
+        updateNavBar(withHexCode: colorHex)
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+       
+        updateNavBar(withHexCode: "1D9BF6")
+        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    //MARK: - Nav Bar Setup Methods
+    
+    func updateNavBar(withHexCode colorHexCode: String) {
+        
+        // If we are in "ViewDidLoad" we know that our controller has been loaded, but there is no guarantee that our view has been inserted into the navigation stack yet.
+        guard let navBar = navigationController?.navigationBar else {fatalError("Navigation controller does not exist.")}
+        
+        
+        guard let navBarColor = UIColor(hexString: colorHexCode) else { fatalError() }
+        
+        navBar.barTintColor = navBarColor
+        
+        // tintColor affect bar buttons and navigation buttons.
+        // returnFlat -> true means return a low contrast color.
+        navBar.tintColor = ContrastColorOf(navBarColor, returnFlat: true)
+        
+        navBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor: ContrastColorOf(navBarColor, returnFlat: true)]
+        
+        searchBar.barTintColor = navBarColor
+        
     }
     
     
@@ -52,6 +97,17 @@ class TodoListViewController: SwipeTableViewController {
         let cell = super.tableView(tableView, cellForRowAt: indexPath) as! CustomCell
         
         if let item = todoItems?[indexPath.row] {
+            
+            // set background colors based on a gradient, and also adapt the text based on the background color.
+            if let color = UIColor(hexString: selectedCategory!.color)?.darken(byPercentage: CGFloat(indexPath.row) / CGFloat(todoItems!.count)) {
+                cell.background.backgroundColor = color
+                cell.backgroundColor = color
+                
+                cell.dateCreated?.textColor = ContrastColorOf(color, returnFlat: true)
+                cell.body?.textColor = ContrastColorOf(color, returnFlat: true)
+            }
+
+            
             // set the cell title
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
